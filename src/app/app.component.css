@@ -1,0 +1,53 @@
+* {
+    color: white;
+}
+
+.container {
+    overflow: hidden;
+}
+
+.title {
+    text-align: center;
+    padding: 2rem;
+    background-color :#12324396;
+
+    font-size: 22px;
+}
+
+.button-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.bttn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #887C75;
+    margin: 1rem;
+    padding: 1rem;
+    width: 200px;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all .5s ease;
+    background-color: #05121b;
+}
+
+.bttn:hover {
+    background-color: #887C75;
+    box-shadow:  6px 6px 0px #766c66,
+             -6px -6px 0px #9a8c84;
+}
+
+
+.heroList {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+}
