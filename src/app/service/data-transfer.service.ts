@@ -11,7 +11,8 @@ export class DataTransferService {
     private fightLogSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
     setLog(txt: string) {
-      const updatedLog = this.fightLogSubject.getValue() + '\n' + txt + '\n';
+      const updatedLog = this.fightLogSubject.getValue() + '<div>' + txt + '</div>';
+      // const updatedLog = '<div>' + txt + '</div> \n ' + this.fightLogSubject.getValue();
       this.fightLogSubject.next(updatedLog);
     }
 
@@ -21,6 +22,11 @@ export class DataTransferService {
 
     resetLog() {
       this.fightLogSubject.next('');
+    }
+
+    updateFightText(txt: string) {
+       this.fightLog = this.fightLog +'\n' + '<p>' + txt + '<p>';
+      //  this.fightLog = '<p>' + txt + '<p>' + '<br>' +  this.fightLog ;
     }
 
 

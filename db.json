@@ -1,0 +1,65 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "heroes": [
+    {
+      "id": 1,
+      "img": "/assets/witch.jpg",
+      "name": "Witch",
+      "hp": 80,
+      "type": "Witch",
+      "lvl": 1,
+      "damage": 15,
+      "nrOfWins": 0,
+      "nrOfLosses": 0
+    },
+    {
+      "id": 2,
+      "img": "/assets/necromancer.jpg",
+      "name": "Necromancer",
+      "hp": 80,
+      "type": "Necromancer",
+      "lvl": 1,
+      "damage": 15,
+      "nrOfWins": 0,
+      "nrOfLosses": 0
+    },
+    {
+      "id": 3,
+      "img": "/assets/knight.jpg",
+      "name": "knight",
+      "hp": 80,
+      "type": "knight",
+      "lvl": 1,
+      "damage": 15,
+      "nrOfWins": 0,
+      "nrOfLosses": 0
+    },
+    {
+      "id": 4,
+      "img": "/assets/dragon.jpg",
+      "name": "Dragon",
+      "hp": 80,
+      "type": "Dragon",
+      "lvl": 1,
+      "damage": 15,
+      "nrOfWins": 0,
+      "nrOfLosses": 0
+    }
+  ]
+}

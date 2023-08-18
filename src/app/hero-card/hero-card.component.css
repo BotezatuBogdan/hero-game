@@ -13,10 +13,12 @@
 
 .goldBorder {
     border: 5px solid #f2d3a4;
-    box-shadow: 6px 6px 0px #d3b88f,
-        -6px -6px 0px #ffeeb9;
+    box-shadow: inset 6px 6px 0px #d3b88f,
+        inset -6px -6px 0px #ffeeb9;
 }
-.card-container ,.fight-container {
+
+.card-container,
+.fight-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -24,12 +26,13 @@
     flex-direction: column;
     gap: 2rem;
     min-height: 501px;
-    width: 1220px;
+    width: 80vw;
     transition: all .5s ease;
     text-align: center;
 }
 
 .card-container {
+    display: flex;
     flex-direction: row;
 }
 
@@ -43,10 +46,9 @@
     padding: 20px;
     margin: 1rem;
     gap: .5rem;
-    background-color: white;
     background-color: #05121b;
-    box-shadow: 6px 6px 0px #d3b88f,
-        -6px -6px 0px #ffeeb9;
+    box-shadow: inset 6px 6px 0px #d3b88f,
+        inset -6px -6px 0px #ffeeb9;
 }
 
 .card-img {
@@ -68,8 +70,9 @@
     object-fit: cover;
 }
 
-.card-img:hover {
+.card:hover {
     transform: scale(1.2);
+    transition: all .5s ease;
 }
 
 .card-details {
@@ -80,8 +83,8 @@
 .fight-log-container {
     background-color: white;
     background-color: #05121b;
-    box-shadow: 6px 6px 20px #d3b88f,
-        -6px -6px 20px #ffeeb9;
+    box-shadow: inset 6px 6px 0px #d3b88f,
+        inset -6px -6px 0px #ffeeb9;
     padding: 1rem;
     height: 300px;
     width: 400px;
@@ -91,31 +94,44 @@
 
 }
 
-.fight-log-container::-webkit-scrollbar { 
-    display: none;  /* Safari and Chrome */
+.heroes-to-fight {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
 }
 
+.fight-log-imported-text {
+    display: flex;
+    flex-direction: column;
+    scroll-margin-bottom: 1000rem;
+}
+
+.fight-log-container::-webkit-scrollbar {
+    display: none;
+    /* Safari and Chrome */
+}
 
 .cdk-drag-preview {
     box-sizing: border-box;
     border-radius: 4px;
     box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-                0 8px 10px 1px rgba(0, 0, 0, 0.14),
-                0 3px 14px 2px rgba(0, 0, 0, 0.12);
-  }
-  
-  .cdk-drag-placeholder {
+        0 8px 10px 1px rgba(0, 0, 0, 0.14),
+        0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
     opacity: 0;
-  }
-  
-  .cdk-drag-animating {
+}
+
+.cdk-drag-animating {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-  }
-  
-  .example-box:last-child {
+}
+
+.example-box:last-child {
     border: none;
-  }
-  
-  .example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+}
+
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
     transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-  }
+}

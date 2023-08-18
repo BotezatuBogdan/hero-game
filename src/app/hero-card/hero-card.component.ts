@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { HeroServiceService } from '../service/hero-service.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { DataTransferService } from '../service/data-transfer.service';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Hero } from '../service/hero';
+
 
 @Component({
   selector: 'app-hero-card',
@@ -12,10 +14,9 @@ import { BehaviorSubject } from 'rxjs';
 export class HeroCardComponent implements OnInit {
 
   showFightLog = true;
-
-
   receivedData: any = '';
-
+  heroList = this.heroService.getHeroes();
+  items: typeof this.heroList = [];
 
   constructor(private heroService: HeroServiceService, private dataTransferService: DataTransferService) {
     // this.dataTransferService.getData().subscribe((data) => {
@@ -23,23 +24,30 @@ export class HeroCardComponent implements OnInit {
     // });
   }
 
+
+  heroesList$!: Observable<Hero[]>;
+  
+
   ngOnInit(): void {
+    this.heroesList$ = this.heroService.getHeroesListObservable();
+
+    this.heroesList$.subscribe(data => {
+      console.log('Updated heroes list:', data);
+      this.heroList = data;
+    });
+
     this.dataTransferService.getLogObservable().subscribe(data => {
       this.receivedData = data;
-      console.log('Received data:', data);
     });
-}
-
-
-  heroList = this.heroService.getHeroes();
-  items: typeof this.heroList = [];
-
-  handleButtonClicked() {
-    console.log(this.receivedData);
-
   }
 
-  dropHero(event: CdkDragDrop<typeof this.heroList>) {
+
+  deleteHero(index: number) {
+    this.heroService.deleteHero(index);
+  }
+
+
+  dropHero(event: CdkDragDrop<any, any, any>) {
     // this.items.push(this.heroList[0])
     if (event.previousContainer === event.container) {
       // Handle reordering within the hero container if needed
@@ -50,6 +58,7 @@ export class HeroCardComponent implements OnInit {
         event.previousIndex,
         event.currentIndex
       );
+      this.dataTransferService.resetLog();
     }
   }
 
@@ -65,12 +74,13 @@ export class HeroCardComponent implements OnInit {
           event.currentIndex
         );
       }
+      this.dataTransferService.resetLog();
       this.heroService.updateHeroesToFight(this.items);
     }
   }
 
   formatFightLog(log: string): string {
-    return log.replace(/\n/g, '<br>');
+     return log.replace(/\n/g, '<br>');
   }
 
 }

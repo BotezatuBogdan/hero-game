@@ -3,9 +3,10 @@ import { delay } from 'rxjs/operators';
 import { HeroServiceService } from './hero-service.service';
 import { FightService } from './fight.service';
 import { DataTransferService } from './data-transfer.service';
+import { HttpClient } from '@angular/common/http';
 
-const heroServ = new HeroServiceService;
-let fightserv = new FightService;
+
+let fightserv = new DataTransferService;
 
 
 let currentFightText = '';
@@ -18,17 +19,21 @@ export class Hero {
     type: string | undefined;
     lvl: number;
     damage: number;
+    id:number;
     nrOfWins: number;
+    nrOfLosses: number;
 
-
-    constructor(name: string, img: string, public dataTransferService?: DataTransferService) {
+    constructor(name: string, img: string, public dataTransferService?: DataTransferService, public heroServ?: HeroServiceService) {
+        this.id = 0;
         this.img = img;
         this.name = name;
         this.hp = 80;
         this.lvl = 1;
         this.damage = 15;
         this.nrOfWins = 0;
+        this.nrOfLosses = 0;
     }
+
 
     attacked(damage: number) {
         let chance = Math.random();
@@ -45,7 +50,7 @@ export class Hero {
         }
         this.hp -= damage;
 
-        currentFightText = this.name + " has been attacked. Hp reduced by " + damage + ". Hp remaining: " + this.hp + ".";
+        currentFightText = this.name + " has been attacked. \n Hp reduced by " + damage + ". Hp remaining: " + this.hp + ".";
         this.dataTransferService?.setLog(currentFightText);
     }
 
@@ -55,13 +60,16 @@ export class Hero {
 }
 
 export class Witch extends Hero {
-    private HOLY_MAGIC_CHANCE = 0.02;
-    private DARK_MAGIC_CHANCE = 0.01;
+    private HOLY_MAGIC_CHANCE = 0.1;
+    private DARK_MAGIC_CHANCE = 0.05;
     private WATER_MAGIC_CHANCE = 0.3;
     private FIRE_MAGIC_CHANCE = 0.6;
 
-    constructor(name: string, hp: number,  override dataTransferService?: DataTransferService) {
+    constructor(name: string, hp: number, damage: number, lvl: number, override dataTransferService?: DataTransferService, override heroServ?: HeroServiceService) {
         super(name, "Witch.png");
+        this.hp = hp;
+        this.damage = damage;
+        this.lvl = lvl;
         this.type = "Witch";
     }
 
@@ -108,7 +116,7 @@ export class Witch extends Hero {
     }
 
     override attack(otherHero: Hero) {
-        let damage = 10;
+        let damage = this.damage;
         damage = this.applyElementalEffect(damage);
 
         currentFightText = this.name + " attacked " + otherHero.name + " with damage: " + damage + ".";
@@ -123,8 +131,11 @@ export class Necromancer extends Hero {
     private SOUL_DRAIN_CHANCE = 0.3;
     private SUMMON_ZOMBIE_CHANCE = 0.6;
 
-    constructor(name: string, hp: number,  override dataTransferService?: DataTransferService) {
+    constructor(name: string,hp: number, damage: number, lvl: number, override dataTransferService?: DataTransferService, override heroServ?: HeroServiceService) {
         super(name, "Necromancer.png");
+        this.hp = hp;
+        this.damage = damage;
+        this.lvl = lvl;
         this.type = "Necromancer";
     }
 
@@ -142,9 +153,15 @@ export class Necromancer extends Hero {
     }
 
     private applySummonZombie(damage: number): number {
-        currentFightText =this.name + " summoned a zombie to attack!";
+        currentFightText = this.name + " summoned a zombie to attack!";
         this.dataTransferService?.setLog(currentFightText);
         return damage + 15;
+    }
+
+    private applyNormalAttack(damage: number): number {
+        currentFightText = this.name + " attacks!";
+        this.dataTransferService?.setLog(currentFightText);
+        return damage;
     }
 
     private applyNecromancy(damage: number): number {
@@ -162,11 +179,11 @@ export class Necromancer extends Hero {
     }
 
     override attack(otherHero: Hero) {
-        let damage = 15; // Necromancers deal slightly more base damage
+        let damage = this.damage;
         damage = this.applyNecromancy(damage);
 
-        console.log(this.name + " attacked " + otherHero.name + " with damage: " + damage + ".");
-        currentFightText = this.name + " attacked " + otherHero.name + " with damage: " + damage + ".";
+        currentFightText = this.name + " attacked " + otherHero.name + " with damage: " + damage + "."
+        this.dataTransferService?.setLog(currentFightText);
         otherHero.attacked(damage);
     }
 }
@@ -178,8 +195,11 @@ export class Knight extends Hero {
     private GUARD_CHANCE = 0.25;
     private COUNTER_ATTACK_CHANCE = 0.5;
 
-    constructor(name: string, hp: number,  override dataTransferService?: DataTransferService) {
+    constructor(name: string,hp: number, damage: number, lvl: number, override dataTransferService?: DataTransferService, override heroServ?: HeroServiceService) {
         super(name, "Knight.png");
+        this.hp = hp;
+        this.damage = damage;
+        this.lvl = lvl;
         this.type = "Knight";
     }
 
@@ -240,10 +260,11 @@ export class Knight extends Hero {
     }
 
     override attack(otherHero: Hero) {
-        let damage = 15;
+        let damage = this.damage;
         damage = this.applyCombatAbility(damage);
 
-        console.log(this.name + " attacked " + otherHero.name + " with damage: " + damage + ".");
+        currentFightText = this.name + " attacked " + otherHero.name + " with damage: " + damage + ".";
+        this.dataTransferService?.setLog(currentFightText);
         otherHero.attacked(damage);
     }
 }
@@ -253,8 +274,11 @@ export class Dragon extends Hero {
     private TAIL_SWEEP_CHANCE = 0.3;
     private CLAW_ATTACK_CHANCE = 0.5;
 
-    constructor(name: string, hp: number,  override dataTransferService?: DataTransferService) {
+    constructor(name: string,hp: number, damage: number, lvl: number, override dataTransferService?: DataTransferService, override heroServ?: HeroServiceService) {
         super(name, "Dragon.png");
+        this.hp = hp;
+        this.damage = damage;
+        this.lvl = lvl;
         this.type = "Dragon";
     }
 
@@ -294,7 +318,7 @@ export class Dragon extends Hero {
     }
 
     override attack(otherHero: Hero) {
-        let damage = 30; // Dragons deal high base damage
+        let damage = this.damage;
         damage = this.applyCombatAbility(damage);
 
         currentFightText = this.name + " attacked " + otherHero.name + " with damage: " + damage + "."
@@ -310,7 +334,7 @@ export class Fight {
 
     currentText = '';
 
-    constructor(hero1: Hero, hero2: Hero, private dataTransferService?: DataTransferService) {
+    constructor(hero1: Hero, hero2: Hero, private dataTransferService?: DataTransferService, public heroServ?: HeroServiceService) {
         this.hero1 = hero1;
         this.hero2 = hero2;
         this.turn = 0;
@@ -333,19 +357,26 @@ export class Fight {
     findWinner() {
         if (this.hero1.hp > 0) {
             this.dataTransferService?.setLog(this.hero1.name + " won with: " + this.hero1.hp + " HP left.");
-            heroServ.levelUpHero(this.hero1);
+            if(this.heroServ) {
+                this.heroServ.levelUpHero(this.hero1, this.hero2);
+            }
 
         } else if (this.hero2.hp > 0) {
             this.dataTransferService?.setLog(this.hero2.name + " won with: " + this.hero2.hp + " HP left.");
-            heroServ.levelUpHero(this.hero2);
+            if(this.heroServ) {
+                this.heroServ.levelUpHero(this.hero2, this.hero1);
+            }
+            
+
         } else {
             this.dataTransferService?.setLog("No hero left alive.");
+
         }
     }
 
     go() {
 
-        let winner = null;
+        this.dataTransferService?.resetLog();
 
         const fightLoop = () => {
             if (this.hero1.hp > 0 && this.hero2.hp > 0) {
@@ -353,28 +384,19 @@ export class Fight {
                 this.performAttack();
                 this.changeTurn();
 
-                currentFightText = '<hr>';
-                console.log('------------------');
+                currentFightText = '\n___________\n\n';
                 this.dataTransferService?.setLog(currentFightText);
 
-                setTimeout(fightLoop, 1000);
+                setTimeout(fightLoop, 500);
             } else {
                 this.findWinner();
             }
         };
 
         fightLoop();
-        
+
 
     }
 
-
-
-
-
 }
-
-// function sendData() {
-//      throw new Error('Function not implemented.');
-// }
 

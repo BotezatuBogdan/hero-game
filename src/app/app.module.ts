@@ -3,6 +3,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MatDialogModule } from '@angular/material/dialog';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {FormControl, Validators, FormsModule, ReactiveFormsModule, } from '@angular/forms';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {MatSelectModule} from '@angular/material/select';
+import {MatSnackBar, MatSnackBarRef, MatSnackBarModule} from '@angular/material/snack-bar';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,7 +21,7 @@ import { HeroAddComponent } from './hero-add/hero-add.component';
   declarations: [
     AppComponent,
     HeroCardComponent,
-    HeroAddComponent
+    HeroAddComponent,
   ],
   imports: [
     BrowserModule,
@@ -22,7 +29,13 @@ import { HeroAddComponent } from './hero-add/hero-add.component';
     BrowserAnimationsModule,
     MatDialogModule,
     DragDropModule,
-    MatDividerModule
+    MatDividerModule,
+    MatInputModule,
+    MatFormFieldModule,
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

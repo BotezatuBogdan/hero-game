@@ -6,6 +6,7 @@ import { Fight, Knight, Witch, Hero, Dragon, Necromancer } from './service/hero'
 import { HeroServiceService } from './service/hero-service.service';
 import { FightService } from './service/fight.service';
 import { DataTransferService } from './service/data-transfer.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -26,42 +27,49 @@ export class AppComponent {
 
   fight() {
 
-    const opponents: { img: string; name: string; hp: number; type?: string; lvl: number }[] = this.heroServ.getHeroesToFight();
+    const opponents: { img: string; name: string; hp: number; damage: number; type?: string; lvl: number }[] = this.heroServ.getHeroesToFight();
 
-    // Create an array to store the created hero instances
-    let heroInstances = [];
+    if (opponents.length > 0) {
 
-    // Iterate over the opponents and create instances based on their class names
-    for (let opponent of opponents) {
-      if (opponent.type) {
-        let heroInstance: Hero | null = null;
+      // Create an array to store the created hero instances
+      let heroInstances = [];
 
-        switch (opponent.type) {
-          case 'Witch':
-            heroInstance = new Witch(opponent.name, opponent.hp, this.dataTransferService);
-            break;
-          case 'Knight':
-            heroInstance = new Knight(opponent.name, opponent.hp, this.dataTransferService);
-            break;
-          case 'Dragon':
-            heroInstance = new Dragon(opponent.name, opponent.hp, this.dataTransferService);
-            break;
-          case 'Necromancer':
-            heroInstance = new Necromancer(opponent.name, opponent.hp, this.dataTransferService);
-            break;
-          // Add other hero classes and their cases here
-        }
+      // Iterate over the opponents and create instances based on their class names
+      for (let opponent of opponents) {
+        if (opponent.type) {
+          let heroInstance: Hero | null = null;
 
-        if (heroInstance) {
-          heroInstances.push(heroInstance);
+          switch (opponent.type) {
+            case 'Witch':
+              heroInstance = new Witch(opponent.name, opponent.hp, opponent.damage, opponent.lvl, this.dataTransferService);
+              break;
+            case 'Knight':
+              heroInstance = new Knight(opponent.name, opponent.hp, opponent.damage, opponent.lvl, this.dataTransferService);
+              break;
+            case 'Dragon':
+              heroInstance = new Dragon(opponent.name, opponent.hp, opponent.damage, opponent.lvl, this.dataTransferService);
+              break;
+            case 'Necromancer':
+              heroInstance = new Necromancer(opponent.name, opponent.hp, opponent.damage, opponent.lvl, this.dataTransferService);
+              break;
+            // Add other hero classes and their cases here
+          }
+
+          if (heroInstance) {
+            heroInstances.push(heroInstance);
+          }
         }
       }
+
+      const epicfight = new Fight(heroInstances[0], heroInstances[1], this.dataTransferService, this.heroServ)
+
+
+      epicfight.go()
+
+    } else {
+      alert('Place two opponents to start the fight');
     }
 
-    const epicfight = new Fight(heroInstances[0], heroInstances[1], this.dataTransferService)
-    epicfight.go()
-
-    this.fighService.emitButtonClick();
   }
 
 
