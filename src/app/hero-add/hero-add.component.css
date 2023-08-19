@@ -48,7 +48,7 @@
 }
 
 .buttons {
-    gap: 2rem
+    gap: 1rem
 }
 
 .button {
@@ -72,4 +72,76 @@
     color: #fff;
     background-color: red;
     padding: .5rem;
+}
+
+.hero-details {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+@media only screen and (max-width: 1000px) {
+
+    * {
+        font-size: 10px;
+    }
+
+    .container {
+        width: 300px;
+        height: 500px;
+    }
+
+    .hero-image-container {
+        margin-top: .5rem;
+    }
+
+    .hero-image {
+        height: 100px;
+        width: 100px;
+        margin: .5rem;
+    }
+
+    .input-info {
+        padding: 4px;
+    }
+
+    .hero-details {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+
+    .input-info {
+        font-size: 10px;
+    }
+
+    .buttons {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .button {
+        width: 100px;
+        height: 4rem;
+    }
+
+    mat-form-field {
+        width: 150px;
+    }
+
+    @media (max-width: 768px) and (orientation: landscape) {
+
+        .hero-image {
+            height: 200px;
+            width: 200px;
+            margin: .5rem;
+        }
+        .container {
+            height: 250px;
+            width: 550px;
+            display: flex;
+            flex-direction: row;
+        }
+      }
 }

@@ -8,31 +8,35 @@
     </div>
 
     <div *ngIf="showError" class="error-message">
-       The name already exists. Please pick a new one.
+        The name already exists. Please pick a new one.
     </div>
 
-    <div class="hero-info">
+    <div class="hero-details">
 
-        <div class="input-info">Please add your Hero name</div>
+        <div class="hero-info">
 
-        <mat-form-field appearance="outline">
-            <mat-label>Hero Name</mat-label>
-            <input matInput placeholder="Hero Name" [(ngModel)]="name">
-        </mat-form-field>
+            <div class="input-info">Please add your Hero name</div>
 
-    </div>
-    <div class="hero-type">
+            <mat-form-field appearance="outline">
+                <mat-label>Hero Name</mat-label>
+                <input matInput placeholder="Hero Name" [(ngModel)]="name">
+            </mat-form-field>
 
-        <div class="input-info">Please add your Hero type</div>
+        </div>
+        <div class="hero-type">
 
-        <mat-form-field>
-            <mat-label>Hero Type</mat-label>
-            <mat-select [(ngModel)]="selectedType" name="HeroType">
-                <mat-option *ngFor="let type of heroTypes" [value]="type.value">
-                    {{type.value}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
+            <div class="input-info">Please add your Hero type</div>
+
+            <mat-form-field>
+                <mat-label>Hero Type</mat-label>
+                <mat-select [(ngModel)]="selectedType" name="HeroType">
+                    <mat-option *ngFor="let type of heroTypes" [value]="type.value">
+                        {{type.value}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+        </div>
 
     </div>
 
