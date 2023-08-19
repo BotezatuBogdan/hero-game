@@ -14,7 +14,7 @@ export class HeroServiceService {
   herolist: any[] = [
     {
       id: 1,
-      img: '/assets/witch.jpg',
+      img: 'assets/witch.jpg',
       name: 'Witch',
       hp: 80,
       type: 'Witch',
@@ -25,7 +25,7 @@ export class HeroServiceService {
     },
     {
       id: 2,
-      img: '/assets/necromancer.jpg',
+      img: 'assets/necromancer.jpg',
       name: 'Necromancer',
       hp: 80,
       type: 'Necromancer',
@@ -36,7 +36,7 @@ export class HeroServiceService {
     },
     {
       id: 3,
-      img: '/assets/knight.jpg',
+      img: 'assets/knight.jpg',
       name: 'Knight',
       hp: 80,
       type: 'Knight',
@@ -47,7 +47,7 @@ export class HeroServiceService {
     },
     {
       id: 4,
-      img: '/assets/dragon.jpg',
+      img: 'assets/dragon.jpg',
       name: 'Dragon',
       hp: 80,
       type: 'Dragon',
