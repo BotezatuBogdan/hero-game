@@ -104,7 +104,7 @@ export class HeroServiceService {
 
     if (checkDuplicate) {
       let newHeroImg = newHero.type.toLowerCase();
-      newHero.img = '/assets/' + newHeroImg + '.jpg';
+      newHero.img = 'assets/' + newHeroImg + '.jpg';
       this.herolist.push(newHero);
     }
 

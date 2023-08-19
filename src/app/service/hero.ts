@@ -387,7 +387,7 @@ export class Fight {
                 currentFightText = '\n___________\n\n';
                 this.dataTransferService?.setLog(currentFightText);
 
-                setTimeout(fightLoop, 0);
+                setTimeout(fightLoop, 500);
             } else {
                 this.findWinner();
             }
