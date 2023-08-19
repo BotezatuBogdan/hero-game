@@ -7,7 +7,7 @@
 
     <div class="fight-container ">
         <div class="fight-drop-cards goldBorder">
-            <div cdkDropList [cdkDropListData]="items" class="card-container " (cdkDropListDropped)="dropItem($event)">
+            <div cdkDropList [cdkDropListData]="items" class="cards-to-fight-container " (cdkDropListDropped)="dropItem($event)">
                 <div class="heroes-to-fight" *ngFor="let item of items; let i = index">
                     <!-- Card -->
                     <div class="card" cdkDrag>

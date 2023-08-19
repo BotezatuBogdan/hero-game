@@ -16,8 +16,9 @@ export class HeroAddComponent {
 
 
   name: string = 'Knight';
-
   selectedType: string = 'Knight'
+
+  showError = false; 
 
   heroTypes = [
     {value: 'Knight'},
@@ -46,8 +47,19 @@ export class HeroAddComponent {
       // Add other hero classes and their cases here
     }
 
-    this.heroService.addHero(heroInstance);
-    this.dialogRef.close()
+    let err = this.heroService.addHero(heroInstance);
+
+    if(err) {
+      this.dialogRef.close()
+    } else {
+        this.showError = true;
+        setTimeout(() => {
+          this.showError = false;
+        }, 3000); // Hide the error message after 3 seconds
+      
+    }
+
+    
   }
 
   closeDialog() {

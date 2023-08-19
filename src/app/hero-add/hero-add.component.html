@@ -1,43 +1,46 @@
 <div class="container">
 
+
     <div class="hero-image-container">
         <div class="hero-image">
             <img src="assets\{{selectedType.toLowerCase()}}.jpg" alt="">
         </div>
     </div>
 
+    <div *ngIf="showError" class="error-message">
+       The name already exists. Please pick a new one.
+    </div>
 
+    <div class="hero-info">
 
-        <div class="hero-info">
+        <div class="input-info">Please add your Hero name</div>
 
-            <div class="input-info">Please add your Hero name</div>
+        <mat-form-field appearance="outline">
+            <mat-label>Hero Name</mat-label>
+            <input matInput placeholder="Hero Name" [(ngModel)]="name">
+        </mat-form-field>
 
-            <mat-form-field appearance="outline">
-                <mat-label>Hero Name</mat-label>
-                <input matInput placeholder="Hero Name" [(ngModel)]="name">
-            </mat-form-field>
+    </div>
+    <div class="hero-type">
 
-        </div>
-        <div class="hero-type">
+        <div class="input-info">Please add your Hero type</div>
 
-            <div class="input-info">Please add your Hero type</div>
-
-            <mat-form-field>
-                <mat-label>Hero Type</mat-label>
-                <mat-select [(ngModel)]="selectedType" name="HeroType">
-                  <mat-option *ngFor="let type of heroTypes" [value]="type.value">
+        <mat-form-field>
+            <mat-label>Hero Type</mat-label>
+            <mat-select [(ngModel)]="selectedType" name="HeroType">
+                <mat-option *ngFor="let type of heroTypes" [value]="type.value">
                     {{type.value}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
 
-        </div>
+    </div>
 
-        <div class="buttons">
-            <button class="button add-button" (click)="createHero()">Crete Hero</button>
+    <div class="buttons">
+        <button class="button add-button" (click)="createHero()">Create Hero</button>
 
-            <button class="button close-button" (click)="closeDialog()"> Close </button>
-        </div>
+        <button class="button close-button" (click)="closeDialog()"> Close </button>
+    </div>
 
 
 </div>

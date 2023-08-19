@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { HeroAddComponent } from './hero-add/hero-add.component';
@@ -7,6 +7,7 @@ import { HeroServiceService } from './service/hero-service.service';
 import { FightService } from './service/fight.service';
 import { DataTransferService } from './service/data-transfer.service';
 import { BehaviorSubject } from 'rxjs';
+import { ToastContainerDirective } from 'ngx-toastr';
 
 @Component({
   selector: 'app-root',
@@ -16,11 +17,13 @@ import { BehaviorSubject } from 'rxjs';
 export class AppComponent {
   title = 'HeroFight';
 
-  constructor(private dialogRef: MatDialog, private heroServ: HeroServiceService, private fighService: FightService, private dataTransferService: DataTransferService) { }
+  snackTexk: string = '';
+
+  constructor(private dialogRef: MatDialog, private heroServ: HeroServiceService, private toastService: FightService, private dataTransferService: DataTransferService) { }
+
 
   addHero() {
     this.dialogRef.open(HeroAddComponent);
-
   }
 
   @Output() buttonClicked = new EventEmitter<void>();
@@ -29,7 +32,7 @@ export class AppComponent {
 
     const opponents: { img: string; name: string; hp: number; damage: number; type?: string; lvl: number }[] = this.heroServ.getHeroesToFight();
 
-    if (opponents.length > 0) {
+    if (opponents.length === 2) {
 
       // Create an array to store the created hero instances
       let heroInstances = [];
@@ -67,7 +70,14 @@ export class AppComponent {
       epicfight.go()
 
     } else {
-      alert('Place two opponents to start the fight');
+      // alert('Place two opponents to start the fight');
+      // this.fighService.error('An error occurred.', 'Error');
+      this.snackTexk = 'Please place two opponents in the golden frame to start the fight'
+      let x = document.getElementById("snackbar") as HTMLElement;
+      if (x) {
+        x.className = "show";
+        setTimeout(function () { x.className = x.className.replace("show", ""); }, 3000);
+      }
     }
 
   }

@@ -58,7 +58,7 @@
     background-color: #05121b;
     color: white;
     font-size: 14px;
-    
+
     box-shadow: inset 6px 6px 0px #d3b88f,
         inset -6px -6px 0px #ffeeb9;
 }
@@ -66,4 +66,10 @@
 .button:focus {
     box-shadow: inset -6px -6px 1px #313131,
         inset 6px 6px 1px #4d4d4d;
+}
+
+.error-message {
+    color: #fff;
+    background-color: red;
+    padding: .5rem;
 }

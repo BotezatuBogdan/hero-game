@@ -87,6 +87,8 @@ export class HeroServiceService {
     return this.heroesListSubject.asObservable();
   }
 
+
+
   addHero(newHero: any) {
 
     let checkDuplicate = true;
@@ -95,7 +97,7 @@ export class HeroServiceService {
 
       if (element.name === newHero.name) {
         checkDuplicate = false;
-        alert('Name already taken')
+        
       }
 
     });
@@ -105,6 +107,8 @@ export class HeroServiceService {
       newHero.img = '/assets/' + newHeroImg + '.jpg';
       this.herolist.push(newHero);
     }
+
+    return checkDuplicate;
 
   }
 
